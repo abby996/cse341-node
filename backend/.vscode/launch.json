@@ -7,7 +7,7 @@
           "request": "launch",
           "name": "Debug NodeJS backend project",
           "skipFiles": ["<node_internals>/**"],
-          "program": "${workspaceFolder}\\app.js"
+          "program": "${workspaceFolder}\\server.js"
         }
       ]
     }
