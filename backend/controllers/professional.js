@@ -6,7 +6,7 @@ const professionalData = {
     firstName: "Abdias",
     url: "https://example.com/profile"
   },
-  primaryDescription: "           I am a passionate software developer with expertise in full-stack development. I love creating innovative solutions and learning new technologies.",
+  primaryDescription: "           a passionate software developer with expertise in full-stack development. I love creating innovative solutions and learning new technologies.",
   workDescription1: "Currently working on building scalable web applications using modern technologies like Node.js, React, and MongoDB.",
   workDescription2: "Learning REST API development, cloud deployment, and new development methodologies.",
   linkTitleText: "Connect with me on:",
