@@ -1,98 +1,35 @@
-const multer = require('multer')
 const express = require('express');
-const bodyParser = require('body-parser');
-const app = express()
-const router = express.Router();
-const port =3000; 
+const path = require('path');
+const app = express();
+const port = 3000;
 
+// Middleware pour servir les fichiers statiques
+app.use(express.static(path.join(__dirname)));
 
-router.get('/home', (req, res) => {
+// Routes simples pour le frontend
+app.get('/home', (req, res) => {
   res.send('Hello World, This is home router');
 });
- 
-router.get('/profile', (req, res) => {
+
+app.get('/profile', (req, res) => {
   res.send('Hello World, This is profile router');
 });
- 
-router.get('/login', (req, res) => {
+
+app.get('/login', (req, res) => {
   res.send('Hello World, This is login router');
 });
- 
-router.get('/logout', (req, res) => {
+
+app.get('/logout', (req, res) => {
   res.send('Hello World, This is logout router');
 });
- 
 
-
-
- 
-
-app.use(bodyParser.json());
- 
-var storage = multer.diskStorage({
-  destination: function (req, file, callback) {
-    callback(null, './uploads');
-  },
-  filename: function (req, file, callback) {
-    callback(null, file.fieldname + '-' + Date.now());
-  }
-});
- 
-var upload = multer({ storage: storage }).array('userPhoto', 2);
- 
-app.post('/api/photo', function (req, res) {
-  upload(req, res, function (err) {
-    if (err) {
-      return res.end("Error uploading file.");
-    }
-    res.end("File is uploaded");
-  });
-});
- 
-app.listen(3000, function () {
-  console.log("Working on port 3000");
+// Route racine - sert le fichier HTML principal
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-var storage = multer.diskStorage({
-  destination: function (req, file, callback) {
-    callback(null, './uploads');
-  },
-  filename: function (req, file, callback) {
-    callback(null, file.fieldname + '-' + Date.now());
-  }
+// Démarrage du serveur
+app.listen(port, () => {
+  console.log(` Frontend server running on http://localhost:${port}`);
+  console.log(` Serving static files from: ${__dirname}`);
 });
- 
-var upload = multer({ storage : storage }).array('userPhoto',2);
-
-
-
-
-
-
-
-
-app.use('/', router);
-
-app.get ('/', (req, res) =>{
-res.send( 'AbbyTech ');
-});
-
-
-
-
-// Add middleware before routes
-app.use(bodyParser.json());
-app.use('/', router);
- 
-
-app.listen(process.env.PORT || 3000, () => {
-  console.log(`App Started on PORT ${process.env.PORT || 3000}`);
-});
-
-
-
-
-
- 
-
-
