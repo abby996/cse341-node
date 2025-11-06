@@ -4,7 +4,7 @@ const app = express();
 const port = 3000;
 
 // Middleware pour servir les fichiers statiques
-app.use(express.static(path.join(__dirname)));
+app.use(express.static(path.join(__dirname, './frontend/')));
 
 // Routes simples pour le frontend
 app.get('/home', (req, res) => {
@@ -25,7 +25,7 @@ app.get('/logout', (req, res) => {
 
 // Route racine - sert le fichier HTML principal
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
+  res.sendFile(path.join(__dirname, '../frontend/index.html'));
 });
 
 // Démarrage du serveur
