@@ -21,7 +21,7 @@ app.get('/login', (req, res) => {
 
 app.get('/logout', (req, res) => {
   res.send('Hello World, This is logout router');
-});
+}); 
 
 // Route racine - sert le fichier HTML principal
 app.get('/', (req, res) => {
