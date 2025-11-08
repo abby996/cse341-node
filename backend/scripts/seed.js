@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Contact = require('../models/Contact'); // Correction du chemin
+const Contact = require('../models/Contact'); 
 require('dotenv').config();
 
 // Données de test directement dans le script (plus simple)

@@ -14,7 +14,7 @@ require('dotenv').config();
 const port = process.env.PORT || 8080;
 const app = express();
 
-// Connexion à la base de données
+// Connection with database
 connectDB();
 
 // Middleware
@@ -35,7 +35,7 @@ app.use((req, res, next) => {
 app.use('/professional', professionalRoutes);
 app.use('/api/contacts', contactsRoutes);
 
-// Route de base
+//   base route
 app.get('/', (req, res) => {
   res.json({
     message: 'Contacts API is running!',
@@ -48,7 +48,7 @@ app.get('/', (req, res) => {
   });
 });
 
-// Route santé
+// Route health
 app.get('/health', (req, res) => {
   res.json({
     status: 'OK',
@@ -58,7 +58,7 @@ app.get('/health', (req, res) => {
   });
 });
 
-// Gestion des erreurs 404
+// manage errors 404
 app.use('*', (req, res) => {
   res.status(404).json({
     success: false,
@@ -76,7 +76,7 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Démarrage du serveur
+// started server
 app.listen(port, () => {
   console.log(` Contacts API running on http://localhost:${port}`);
   console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);

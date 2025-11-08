@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Contact = require('../models/Contact');
+const Contact = require('../models/contact');
 
 // GET /api/contacts - Récupérer tous les contacts
 router.get('/', async (req, res) => {
