@@ -26,7 +26,7 @@ router.get('/all', async (req, res) => {
   }
 });
 
-// ✅ GET /api/contacts/:id — Get contact by ID
+//  GET /api/contacts/:id — Get contact by ID
 router.get('/:id', async (req, res) => {
   try {
     const contact = await Contact.findById(req.params.id);
@@ -55,7 +55,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// ✅ POST /api/contacts — Create new contact
+// POST /api/contacts — Create new contact
 router.post('/', async (req, res) => {
   try {
     const { firstName, lastName, email, favoriteColor, birthday } = req.body;
@@ -104,7 +104,7 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-// ✅ DELETE /api/contacts/:id — Delete a contact
+//  DELETE /api/contacts/:id — Delete a contact
 router.delete('/:id', async (req, res) => {
   try {
     const deleted = await Contact.findByIdAndDelete(req.params.id);
