@@ -16,7 +16,7 @@ const initDb = (callback) => {
     return callback(error);
   }
 
-  console.log('🔗 Connecting to MongoDB Atlas...');
+  console.log(' Connecting to MongoDB Atlas...');
   
   // SUPPRIMER les options dépréciées
   MongoClient.connect(process.env.MONGODB_URI)

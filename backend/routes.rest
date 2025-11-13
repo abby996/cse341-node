@@ -1,1 +1,37 @@
-GET http://localhost:8080/professional
+
+// Get all contact
+GET http://localhost:8080/contacts
+
+// get contact by Id
+
+GET http://localhost:8080/contacts/690ee0ef8f09e467271d49e1
+
+//Create contact
+
+
+POST http://localhost:8080/contacts/ HTTP/1.1
+content-Type: 'application/json'
+{
+
+    "email": "test@example.com",
+     "username":"test@test.com",
+    "name": "Hello1",
+    "ipaddresse": "198.03.30.0"
+},
+
+// Update contact 
+
+
+PUT  http://localhost:8080/contacts/690ee0ef8f09e467271d49e0 HTTP/1.1
+content-Type: 'application/json'
+{
+ "email": "test@example.com",
+     "username":"test@test.com",
+    "name": "Hello1",
+    "ipaddresse": "198.3.30.1"
+    
+},
+
+
+DELETE  http://localhost:8080/contacts/690ee0ef8f09e467271d49e1 HTTP/1.1
+

@@ -1,6 +1,6 @@
-const Contact = require('./models/Contact');
+const Contact = require('../models/contact');
 
-// GET /contacts - Récupérer tous les contacts
+// GET /contacts - Recuparate all contacts
 const getAllContacts = async (req, res) => {
   try {
     const contacts = await Contact.find().sort({ createdAt: -1 });
@@ -19,7 +19,7 @@ const getAllContacts = async (req, res) => {
   }
 };
 
-// GET /contacts/:id - Récupérer un contact par ID
+// GET /contacts/:id - Recuparate contact by ID
 const getContactById = async (req, res) => {
   try {
     const contact = await Contact.findById(req.params.id);
@@ -51,7 +51,7 @@ const getContactById = async (req, res) => {
   }
 };
 
-// POST /contacts - Créer un nouveau contact (pour les tests)
+// POST /contacts - create a new contact
 const createContact = async (req, res) => {
   try {
     const contact = new Contact(req.body);

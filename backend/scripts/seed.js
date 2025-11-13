@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
-const Contact = require('../models/Contact'); 
+const Contact = require('../models/contact'); 
 require('dotenv').config();
 
-// Données de test directement dans le script (plus simple)
+// Data test, direct script
 const contactsData = [
   {
     firstName: "John",
@@ -15,7 +15,8 @@ const contactsData = [
     jobTitle: "Software Developer",
     notes: "Met at the tech conference last year",
     isFavorite: true,
-    category: "work"
+    category: "work",
+    ipaddresse: "198.03.30.5"
   },
   {
     firstName: "Jane",
@@ -28,7 +29,8 @@ const contactsData = [
     jobTitle: "UI/UX Designer",
     notes: "Great collaborator on projects",
     isFavorite: false,
-    category: "work"
+    category: "work",
+    ipaddresse: "198.03.30.3"
   },
   {
     firstName: "Bob",
@@ -41,7 +43,8 @@ const contactsData = [
     jobTitle: "Manager",
     notes: "College friend",
     isFavorite: true,
-    category: "friend"
+    category: "friend",
+     ipaddresse: "198.03.30.6"
   },
   {
     firstName: "Alice",
@@ -54,7 +57,8 @@ const contactsData = [
     jobTitle: "",
     notes: "Cousin",
     isFavorite: true,
-    category: "family"
+    category: "family",
+    ipaddresse: "198.03.30.0"
   }
 ];
 
@@ -62,23 +66,23 @@ const seedDatabase = async () => {
   try {
     // Connexion à MongoDB
     await mongoose.connect(process.env.MONGODB_URI);
-    console.log('✅ Connected to MongoDB');
+    console.log(' Connected to MongoDB');
 
     // Nettoyer la collection existante
     await Contact.deleteMany({});
-    console.log('✅ Existing contacts cleared');
+    console.log(' Existing contacts cleared');
 
     // Insérer les nouveaux contacts
     const contacts = await Contact.insertMany(contactsData);
-    console.log(`✅ ${contacts.length} contacts inserted successfully`);
+    console.log(` ${contacts.length} contacts inserted successfully`);
 
     // Afficher les contacts insérés
-    console.log('\n📋 Inserted contacts:');
+    console.log('\n Inserted contacts:');
     contacts.forEach(contact => {
       console.log(`   - ${contact.firstName} ${contact.lastName} (${contact.email})`);
     });
 
-    console.log('\n🎉 Database seeding completed!');
+    console.log('\n Database seeding completed!');
     process.exit(0);
   } catch (error) {
     console.error('❌ Seeding error:', error);

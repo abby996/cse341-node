@@ -3,6 +3,15 @@ const path = require('path');
 const app = express();
 const port = 3000;
 
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger-output.json');
+const swaggerDocs = require('./swagger');
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+
+
+
 // Middleware pour servir les fichiers statiques
 app.use(express.static(path.join(__dirname, './frontend/')));
 
@@ -22,6 +31,10 @@ app.get('/login', (req, res) => {
 app.get('/logout', (req, res) => {
   res.send('Hello World, This is logout router');
 }); 
+
+
+// Swagger Docs
+swaggerDocs(app);
 
 // Route racine - sert le fichier HTML principal
 app.get('/', (req, res) => {

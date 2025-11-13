@@ -5,8 +5,12 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
 const connectDB = require('./config/database');
-const professionalRoutes = require('./routes/professional');
+const userRoutes = require('./routes/user');
 const contactsRoutes = require('./routes/contacts');
+const mongodb =require('./data/database')
+const swaggerUi = require('swagger-ui-express');
+const swaggerFile = require('./swagger-output.json');
+
 
 
 require('dotenv').config();
@@ -30,9 +34,9 @@ app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   next();
 });
-
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 // Routes
-app.use('/professional', professionalRoutes);
+app.use('/user', userRoutes);
 app.use('/api/contacts', contactsRoutes);
 
 //   base route
@@ -41,7 +45,7 @@ app.get('/', (req, res) => {
     message: 'Contacts API is running!',
     version: '1.0.0',
     endpoints: {
-      professional: 'GET /professional',
+      professional: 'GET /user',
       contacts: 'GET /api/contacts',
       health: 'GET /health'
     }

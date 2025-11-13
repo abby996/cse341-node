@@ -66,15 +66,15 @@ const contactSchema = new mongoose.Schema({
   timestamps: true // add createdAt and updatedAt automatically
 });
 
-// Index pour la recherche
+// Index for search
 contactSchema.index({ firstName: 'text', lastName: 'text', email: 'text' });
 
-// Méthode pour obtenir le nom complet
+// Method to get complet name
 contactSchema.virtual('fullName').get(function() {
   return `${this.firstName} ${this.lastName}`;
 });
 
-// Assurer que les virtuals sont inclus dans les JSON
+// asume virtuels are include JSON
 contactSchema.set('toJSON', { virtuals: true });
 
 module.exports = mongoose.model('Contact', contactSchema);
