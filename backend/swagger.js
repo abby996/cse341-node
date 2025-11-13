@@ -11,7 +11,7 @@ const options = {
     },
     servers: [
       {
-        url: 'http://localhost:8080', // change to your Render URL when deployed
+        url: 'https://cse341-node-06o0.onrender.com', // change to your Render URL when deployed
       },
     ],
   },
