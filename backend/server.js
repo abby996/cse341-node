@@ -1,59 +1,81 @@
-
-
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
 const connectDB = require('./config/database');
+
+// ROUTES
 const userRoutes = require('./routes/user');
 const contactsRoutes = require('./routes/contacts');
-const mongodb =require('./data/database')
+
+// SWAGGER
 const swaggerUi = require('swagger-ui-express');
 const swaggerFile = require('./swagger-output.json');
-
-
 
 require('dotenv').config();
 
 const port = process.env.PORT || 8080;
 const app = express();
 
-// Connection with database
+// --------------------
+// DATABASE CONNECTION
+// --------------------
 connectDB();
 
-// Middleware
+// --------------------
+// MIDDLEWARE
+// --------------------
 app.use(helmet());
 app.use(cors());
 app.use(express.json({ limit: '10mb' }));
 app.use(bodyParser.json());
 
-// Middleware CORS
-
+// --------------------
+// SWAGGER DOCS
+// --------------------
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
+
+// --------------------
+// CORS HEADERS (GLOBAL)
+// --------------------
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.setHeader(
+    'Access-Control-Allow-Methods',
+    'GET, POST, PUT, DELETE, OPTIONS'
+  );
+  res.setHeader(
+    'Access-Control-Allow-Headers',
+    'Content-Type, Authorization'
+  );
   next();
 });
-// Routes
+
+// --------------------
+// API ROUTES
+// --------------------
 app.use('/user', userRoutes);
 app.use('/api/contacts', contactsRoutes);
 
-//   base route
+// --------------------
+// BASE ROUTE
+// --------------------
 app.get('/', (req, res) => {
   res.json({
     message: 'Contacts API is running!',
     version: '1.0.0',
+    documentation: '/api-docs',
     endpoints: {
-      professional: 'GET /user',
-      contacts: 'GET /api/contacts',
-      health: 'GET /health'
+      users: '/user',
+      contacts: '/api/contacts',
+      health: '/health'
     }
   });
 });
 
-// Route health
+// --------------------
+// HEALTH ROUTE
+// --------------------
 app.get('/health', (req, res) => {
   res.json({
     status: 'OK',
@@ -63,7 +85,9 @@ app.get('/health', (req, res) => {
   });
 });
 
-// manage errors 404
+// --------------------
+// 404 HANDLER
+// --------------------
 app.use('*', (req, res) => {
   res.status(404).json({
     success: false,
@@ -71,9 +95,11 @@ app.use('*', (req, res) => {
   });
 });
 
-// Middleware de gestion d'erreurs global
+// --------------------
+// GLOBAL ERROR HANDLER
+// --------------------
 app.use((err, req, res, next) => {
-  console.error(err.stack);
+  console.error(' SERVER ERROR:', err.stack);
   res.status(500).json({
     success: false,
     error: 'Internal server error',
@@ -81,8 +107,10 @@ app.use((err, req, res, next) => {
   });
 });
 
-// started server
+// --------------------
+// START SERVER
+// --------------------
 app.listen(port, () => {
   console.log(` Contacts API running on http://localhost:${port}`);
-  console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
+  console.log(` Environment: ${process.env.NODE_ENV || 'development'}`);
 });

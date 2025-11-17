@@ -5,7 +5,8 @@
     "description": "API documentation for Contacts project",
     "version": "1.0.0"
   },
-  "host": "localhost:8080",
+  "host": "https://cse341-node-06o0.onrender.com",
+
   "basePath": "/",
   "schemes": [
     "http",
