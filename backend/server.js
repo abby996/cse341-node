@@ -28,13 +28,14 @@ app.use(express.json({ limit: '10mb' }));
 app.use(bodyParser.json());
 
 // Middleware CORS
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   next();
 });
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 // Routes
 app.use('/user', userRoutes);
 app.use('/api/contacts', contactsRoutes);
