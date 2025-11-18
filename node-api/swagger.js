@@ -11,4 +11,9 @@ const doc = {
 const outputFile = './swagger-output.json';
 const routes = ['./server.js'];
 
-swaggerAutogen(outputFile, routes, doc);
+
+// Generate swagger.json
+swaggerAutogen(outputFile, routes, doc).then(() => {
+  console.log('Swagger documentation generated successfully!');
+  console.log('Visit: http://localhost:3000/api-docs');
+});

@@ -3,9 +3,7 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const connectDB = require('./data/database');
 const swaggerUi = require("swagger-ui-express");
-const swaggerFile = require("./swagger/swagger-output.json");
-
-
+const swaggerFile = require("swagger-output.json");
 
 // Load env vars
 dotenv.config();
@@ -16,7 +14,6 @@ connectDB();
 const app = express();
 
 
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 // Middleware
 app.use(cors());
 app.use(express.json());
@@ -24,6 +21,9 @@ app.use(express.urlencoded({ extended: false }));
 
 // Routes
 app.use('/api/items', require('./routes/items'));
+
+// Swagger documentation 
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 // Basic route
 app.get('/', (req, res) => {
@@ -43,14 +43,6 @@ app.get('/health', (req, res) => {
     });
 });
 
-// Handle undefined routes
-app.use('*', (req, res) => {
-    res.status(404).json({
-        success: false,
-        message: 'Route not found'
-    });
-});
-
 // Error handling middleware
 app.use((error, req, res, next) => {
     console.error('Error:', error);
@@ -61,8 +53,17 @@ app.use((error, req, res, next) => {
     });
 });
 
-const PORT = process.env.PORT || 3000;
+// Handle undefined routes (404)
+app.use((req, res) => {
+    res.status(404).json({
+        success: false,
+        message: 'Route not found'
+    });
+});
 
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`);
+    console.log(`API Documentation: http://localhost:3000/api-docs`);
+    console.log(`Health Check: http://localhost:3000/health`);
 });
