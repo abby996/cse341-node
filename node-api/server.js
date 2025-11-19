@@ -3,7 +3,7 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const connectDB = require('./data/database');
 const swaggerUi = require("swagger-ui-express");
-const swaggerFile = require("swagger-output.json");
+const swaggerFile = require("./swagger-output.json");
 
 // Load env vars
 dotenv.config();
