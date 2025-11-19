@@ -2,8 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const connectDB = require('./data/database');
-const swaggerUi = require("swagger-ui-express");
-const swaggerFile = require("./swagger-output.json");
+const fs = require('fs');
 
 // Load env vars
 dotenv.config();
@@ -13,6 +12,23 @@ connectDB();
 
 const app = express();
 
+// Optional Swagger (safe if package or file missing)
+let swaggerUi;
+let swaggerFile;
+let swaggerEnabled = false;
+try {
+    swaggerUi = require('swagger-ui-express');
+    const possiblePaths = ['./swagger-output.json', './swagger/swagger-output.json'];
+    const foundPath = possiblePaths.find(p => fs.existsSync(p));
+    if (foundPath) {
+        swaggerFile = require(foundPath);
+        swaggerEnabled = true;
+    } else {
+        console.warn('Swagger JSON not found, skipping /api-docs');
+    }
+} catch (err) {
+    console.warn('swagger-ui-express not installed or failed to load, skipping /api-docs');
+}
 
 // Middleware
 app.use(cors());
@@ -22,8 +38,10 @@ app.use(express.urlencoded({ extended: false }));
 // Routes
 app.use('/api/items', require('./routes/items'));
 
-// Swagger documentation 
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
+// Swagger documentation (only mount if available)
+if (swaggerEnabled && swaggerUi && swaggerFile) {
+    app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
+}
 
 // Basic route
 app.get('/', (req, res) => {
@@ -64,6 +82,8 @@ app.use((req, res) => {
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`);
-    console.log(`API Documentation: http://localhost:3000/api-docs`);
-    console.log(`Health Check: http://localhost:3000/health`);
+    if (swaggerEnabled) {
+        console.log(`API Documentation: http://localhost:${PORT}/api-docs`);
+    }
+    console.log(`Health Check: http://localhost:${PORT}/health`);
 });
