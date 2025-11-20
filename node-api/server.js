@@ -2,8 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const connectDB = require('./data/database');
-const swaggerUi = require('swagger-ui-express'); 
-const swaggerDocument = require('./swagger-output.json');
+
 
 // Load env vars
 dotenv.config();
@@ -22,8 +21,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/api/items', require('./routes/items'));
 app.use('/api/users', require('./routes/users'));
 
-// Swagger Documentation
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 
 // Basic route
 app.get('/', (req, res) => {
