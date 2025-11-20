@@ -24,7 +24,7 @@ app.use('/api/users', require('./routes/users'));
 app.get('/', (req, res) => {
     res.json({ 
         success: true,
-        message: '🚀 API is working!',
+        message: ' API is working!',
         timestamp: new Date().toISOString(),
         endpoints: {
             documentation: '/api-docs',
@@ -39,7 +39,7 @@ app.get('/', (req, res) => {
 app.get('/health', (req, res) => {
     res.status(200).json({
         success: true,
-        message: '✅ Server is running',
+        message: ' Server is running',
         timestamp: new Date().toISOString(),
         environment: process.env.NODE_ENV || 'development'
     });
@@ -69,7 +69,7 @@ app.use('*', (req, res) => {
 
 // Error handling middleware
 app.use((error, req, res, next) => {
-    console.error('❌ Error:', error);
+    console.error(' Error:', error);
     res.status(500).json({
         success: false,
         message: 'Internal Server Error',
@@ -80,9 +80,9 @@ app.use((error, req, res, next) => {
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
-    console.log(`✅ Server running in ${process.env.NODE_ENV} mode on port ${PORT}`);
+    console.log(` Server running in ${process.env.NODE_ENV} mode on port ${PORT}`);
     console.log(`🌐 Base URL: http://localhost:${PORT}`);
-    console.log(`❤️ Health Check: http://localhost:${PORT}/health`);
+    console.log(` Health Check: http://localhost:${PORT}/health`);
     console.log(`🛍️ Items API: http://localhost:${PORT}/api/items`);
     console.log(`👥 Users API: http://localhost:${PORT}/api/users`);
 });
