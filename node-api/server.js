@@ -1,8 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
-const connectDB = require('./data/database');
-
+const connectDB = require('./data/database'); // ⬅️ GADE - data/database
 
 // Load env vars
 dotenv.config();
@@ -21,16 +20,13 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/api/items', require('./routes/items'));
 app.use('/api/users', require('./routes/users'));
 
-
-
 // Basic route
 app.get('/', (req, res) => {
     res.json({ 
         success: true,
-        message: ' API is working!',
+        message: '🚀 API is working!',
         timestamp: new Date().toISOString(),
         endpoints: {
-            documentation: '/api-docs',
             health: '/health',
             items: '/api/items',
             users: '/api/users'
@@ -42,7 +38,7 @@ app.get('/', (req, res) => {
 app.get('/health', (req, res) => {
     res.status(200).json({
         success: true,
-        message: ' Server is running',
+        message: '✅ Server is running',
         timestamp: new Date().toISOString(),
         environment: process.env.NODE_ENV || 'development'
     });
@@ -52,11 +48,10 @@ app.get('/health', (req, res) => {
 app.use('*', (req, res) => {
     res.status(404).json({
         success: false,
-        message: ` Route not found: ${req.method} ${req.originalUrl}`,
+        message: `❌ Route not found: ${req.method} ${req.originalUrl}`,
         availableEndpoints: [
             'GET /',
             'GET /health',
-            'GET /api-docs',
             'GET /api/items',
             'POST /api/items',
             'GET /api/items/:id',
@@ -73,7 +68,7 @@ app.use('*', (req, res) => {
 
 // Error handling middleware
 app.use((error, req, res, next) => {
-    console.error(' Error:', error);
+    console.error('❌ Error:', error);
     res.status(500).json({
         success: false,
         message: 'Internal Server Error',
@@ -86,8 +81,7 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(` Server running in ${process.env.NODE_ENV} mode on port ${PORT}`);
     console.log(` Base URL: http://localhost:${PORT}`);
-    console.log(` Swagger Documentation: http://localhost:${PORT}/api-docs`);
-    console.log(`Health Check: http://localhost:${PORT}/health`);
+    console.log(` Health Check: http://localhost:${PORT}/health`);
     console.log(` Items API: http://localhost:${PORT}/api/items`);
     console.log(` Users API: http://localhost:${PORT}/api/users`);
 });
