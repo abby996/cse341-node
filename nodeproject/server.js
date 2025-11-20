@@ -5,7 +5,7 @@ const fs = require('fs');
 
 dotenv.config();
 
-const connectDB = require('./data/database'); // ensure this file exists and exports a connect function
+const connectDB = require('./config/database'); // ensure this file exists and exports a connect function
 connectDB();
 
 const app = express();
