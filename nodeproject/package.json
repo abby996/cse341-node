@@ -1,5 +1,5 @@
 {
-  "name": "project",
+  "name": "nodeproject",
   "version": "1.0.0",
   "description": "CSE341 Node.js API with MongoDB",
   "main": "server.js",
