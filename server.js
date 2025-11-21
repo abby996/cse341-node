@@ -8,14 +8,19 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Swagger UI (requires swagger-ui-express and ./swagger/swagger-output.json)
+// Optional safe swagger mount (must be BEFORE 404 handler)
 try {
-    const swaggerUi = require('swagger-ui-express');
-    const swaggerDoc = require('./swagger/swagger-output.json');
-    app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
+  const swaggerUi = require('swagger-ui-express');
+  const swaggerPath = path.join(__dirname, 'swagger', 'swagger-output.json');
+  if (fs.existsSync(swaggerPath)) {
+    const swaggerDocument = require(swaggerPath);
+    app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
     console.log('Swagger mounted at /api-docs');
+  } else {
+    console.warn('Swagger JSON not found at', swaggerPath);
+  }
 } catch (err) {
-    console.warn('/api-docs not available:', err.message);
+  console.warn('swagger-ui-express not installed; /api-docs disabled');
 }
 
 // Middleware
