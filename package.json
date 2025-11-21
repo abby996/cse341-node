@@ -20,12 +20,16 @@
   "homepage": "https://github.com/abby996/cse341-node#readme",
   "dependencies": {
     "body-parser": "^2.2.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
     "express": "^5.1.0",
     "express-session": "^1.18.2",
     "mongodb": "^6.20.0",
+    "mongoose": "^8.20.1",
     "multer": "^2.0.2",
 <<<<<<< HEAD
     "mysql": "^2.18.1"
+<<<<<<< HEAD
 =======
     "mysql": "^2.18.1",
     "swagger-ui-express": "^5.0.1"
@@ -33,5 +37,10 @@
   "devDependencies": {
     "nodemon": "^3.1.11"
 >>>>>>> 7354e79 (swagger)
+=======
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.11"
+>>>>>>> 7b6f1253aab385a9e2a0c7f087471cd623495e28
   }
 }
