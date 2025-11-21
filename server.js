@@ -8,9 +8,9 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Optional Swagger — only mount if package + JSON are present
+// Optional Swagger — safe if package or JSON missing
 try {
-  const swaggerUi = require('swagger-ui-express');
+  const swaggerUi = require('swagger-ui-express'); // will throw if not installed
   const possible = [
     path.join(__dirname, 'swagger-output.json'),
     path.join(__dirname, 'swagger', 'swagger-output.json')
@@ -19,11 +19,12 @@ try {
   if (found) {
     const swaggerDocument = require(found);
     app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+    console.log('Swagger mounted at /api-docs');
   } else {
     console.warn('Swagger JSON not found; /api-docs disabled');
   }
 } catch (err) {
-  console.warn('swagger-ui-express not installed or failed to load; /api-docs disabled');
+  console.warn('swagger-ui-express not installed; /api-docs disabled');
 }
 
 // Middleware
