@@ -1,16 +1,25 @@
-const express = require('express');
 const path = require('path');
+const fs = require('fs');
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
-const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('./swagger-output.json');
-const swaggerDocs = require('./swagger');
-
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-
-
-
+// Optional Swagger — only mount if package + JSON are present
+try {
+    const swaggerUi = require('swagger-ui-express');
+    const possible = [
+        path.join(__dirname, 'swagger-output.json'),
+        path.join(__dirname, 'swagger', 'swagger-output.json')
+    ];
+    const found = possible.find(p => fs.existsSync(p));
+    if (found) {
+        const swaggerDocument = require(found);
+        app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+    } else {
+        console.warn('Swagger JSON not found; /api-docs disabled');
+    }
+} catch (err) {
+    console.warn('swagger-ui-express not installed or failed to load; /api-docs disabled');
+}
 
 // Middleware pour servir les fichiers statiques
 app.use(express.static(path.join(__dirname, './frontend/')));
